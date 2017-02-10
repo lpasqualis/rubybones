@@ -1,0 +1,6 @@
+# If use IntelliJ or RubyMine, this ignores project files
+.idea
+
+# Ignore log files
+logs
+

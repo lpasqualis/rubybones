@@ -1,0 +1,32 @@
+##########################################################################################
+# Basic application information
+
+app:
+  name: Skeleton app
+
+##########################################################################################
+# What features the application uses
+
+features:
+  db: true
+
+##########################################################################################
+# Various paths
+
+paths:
+  root: ./
+  logs: ./logs
+  config: ./config
+
+##########################################################################################
+# DB coordinates and credentials
+
+db:
+  # You can se the db configuration here (not secure), or set environment variables (more secure):
+  #   DBCONF_NAME
+  #   DBCONF_USERNAME
+  #   DBCONF_PASSWORD
+  #
+  dbname: example
+  username: username
+  password: password
