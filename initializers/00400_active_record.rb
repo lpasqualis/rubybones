@@ -14,10 +14,6 @@ if Config.get(:features,:db)
       #collation:  'utf8_unicode_ci'
   )
 
-  Dir.glob("./lib/models/*.rb").each do |r|
-    require r
-  end
-
   Dir.glob("./lib/models/**/*.rb").each do |r|
     require r
   end

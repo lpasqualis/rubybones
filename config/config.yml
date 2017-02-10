@@ -3,6 +3,7 @@
 
 app:
   name: Skeleton app
+  version: 0.0.0
 
 ##########################################################################################
 # What features the application uses
