@@ -1,8 +1,14 @@
-##########################################################################################
-# Basic application information
+#
+# Basic application information. This contains all the defaults. Overrides can be specified in:
+#
+#  config_[ENV].yml
+#
+# Setting the development environment in
+#
 
 app:
-  name: Skeleton app
+  name: Rubybones-based app
+  environment: default
   version: 0.0.0
 
 ##########################################################################################

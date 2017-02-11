@@ -1,0 +1,9 @@
+#
+# Overrides for Production Environment
+#
+
+app:
+  environment: production
+
+db:
+  dbname: example_test

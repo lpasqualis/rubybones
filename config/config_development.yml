@@ -1,0 +1,9 @@
+#
+# Overrides for Development Environment
+#
+
+app:
+  environment: development
+
+db:
+  dbname: example_development

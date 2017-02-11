@@ -5,18 +5,38 @@ class Config
 
   def initialize
     @config=YAML.load_file("./config/config.yml")
+
+    if RubyBonesApp.env
+      env_specific_config = "./config/config_#{RubyBonesApp.env}.yml"
+      config_merge!(@config,YAML.load_file(env_specific_config)) if File.exist?(env_specific_config)
+    end
+
   end
+
 
   #
   # Works similarly to "dig", but fetches a property in a loaded YAML file
   #
   def self.get(*args)
-    $config ||= Config.new
+    $singleton ||= Config.new
     if args.size==0
-      $config.config
+      $singleton.config
     else
-      $config.config.dig(*args.collect{|x| x.to_s})
+      $singleton.config.dig(*args.collect{|x| x.to_s})
     end
+  end
+
+  def config_merge!(first_hash,other_hash)
+    other_hash.each_pair do |current_key, other_value|
+      this_value = first_hash[current_key]
+
+      first_hash[current_key] = if this_value.is_a?(Hash) && other_value.is_a?(Hash)
+        config_merge!(this_value,other_value)
+      else
+        other_value
+      end
+    end
+    first_hash
   end
 
 end

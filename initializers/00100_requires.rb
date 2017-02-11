@@ -4,10 +4,8 @@
 #
 
 require './app/lib/config'
+require 'pp'
 
 if Config.get(:features,:db)
   require 'active_record'
 end
-
-#require 'pp'
-#require 'active_model'

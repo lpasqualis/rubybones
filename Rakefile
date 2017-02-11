@@ -6,9 +6,10 @@
 # Load the environment
 #
 load 'environment.rb'
+require 'json'
 
 #
-# Load all the tasks, so they become avaialble in the rake context
+# Load all the tasks, so they become available in the rake context
 #
 Dir.glob("#{Config.get(:paths,:root)}/app/tasks/*.rake").each do |r|
   load r
@@ -28,16 +29,21 @@ task :migrate do
 end
 
 
-desc "Prints the description of what the application is and does."
+desc "Information about the application."
 task :info do
-  puts "This is a skeleton application, it doesn't do anything yet."
+  puts "\nEnvironment: #{RubyBonesApp.env}\n\n"
+  puts JSON.pretty_generate Config.get
 end
 
 
-desc "Initialize the DB. Change this to include the proper procedure"
+desc "Initialize the DB."
 task :init_db do
   if Config.get(:features,:db)
-    `cat config/init_db.sql | mysql -u root -p`
+    `cat config/init_db.sql | sed 's/\\$ENV\\$/#{RubyBonesApp.env}/' | mysql -u root -p`
+    if RubyBonesApp.env
+      env_specific = "config/init_#{RubyBonesApp.env}.sql"
+      `cat #{env_specific} | sed 's/\\$ENV\\$/#{RubyBonesApp.env}/' | mysql -u root -p` if File.exist?(env_specific)
+    end
   else
     puts "No database in the list of features"
   end
