@@ -3,6 +3,8 @@ require 'yaml'
 class Config
   attr_reader :config
 
+  @@singleton = nil
+
   def initialize
     @config=YAML.load_file("./config/config.yml")
 
@@ -13,17 +15,20 @@ class Config
 
   end
 
+  def get(*args)
+    if args.size==0
+      @config
+    else
+      @config.dig(*args.collect{|x| x.to_s})
+    end
+  end
 
   #
   # Works similarly to "dig", but fetches a property in a loaded YAML file
   #
   def self.get(*args)
-    $singleton ||= Config.new
-    if args.size==0
-      $singleton.config
-    else
-      $singleton.config.dig(*args.collect{|x| x.to_s})
-    end
+    @@singleton ||= Config.new
+    @@singleton.get(*args)
   end
 
   def config_merge!(first_hash,other_hash)
